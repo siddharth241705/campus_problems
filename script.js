@@ -5,11 +5,9 @@ const locationInput = document.getElementById("location");
 const descriptionInput = document.getElementById("description");
 const complaintList = document.getElementById("complaintList");
 const message = document.getElementById("message");
+const complaintsApiUrl = "http://localhost:3000/api/complaints";
 
-const complaints = [];
-let nextId = 1;
-
-function displayComplaints() {
+function displayComplaints(complaints) {
   complaintList.replaceChildren();
 
   if (complaints.length === 0) {
@@ -41,7 +39,17 @@ function displayComplaints() {
   });
 }
 
-form.addEventListener("submit", (event) => {
+async function loadComplaints() {
+  const response = await fetch(complaintsApiUrl);
+  if (!response.ok) {
+    throw new Error("Could not load complaints.");
+  }
+
+  const data = await response.json();
+  displayComplaints(data.complaints);
+}
+
+form.addEventListener("submit", async (event) => {
   event.preventDefault();
 
   const title = titleInput.value.trim();
@@ -53,17 +61,32 @@ form.addEventListener("submit", (event) => {
     return;
   }
 
-  complaints.push({
-    id: nextId++,
-    title,
-    location,
-    description,
-    status: "Pending"
-  });
+  const submitButton = form.querySelector('button[type="submit"]');
+  submitButton.disabled = true;
+  message.textContent = "Submitting complaint...";
 
-  displayComplaints();
-  form.reset();
-  message.textContent = "Complaint submitted successfully.";
+  try {
+    const response = await fetch(complaintsApiUrl, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ title, location, description })
+    });
+
+    const data = await response.json();
+    if (!response.ok) {
+      throw new Error(data.error || "Could not submit complaint.");
+    }
+
+    form.reset();
+    message.textContent = "Complaint submitted successfully.";
+    await loadComplaints();
+  } catch (error) {
+    message.textContent = error.message || "Could not submit complaint.";
+  } finally {
+    submitButton.disabled = false;
+  }
 });
 
-displayComplaints(); 
+loadComplaints().catch((error) => {
+  message.textContent = error.message;
+});
