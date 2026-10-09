@@ -1,0 +1,49 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CampusFix</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>CampusFix</h1>
+    <p>Report campus problems. Track their progress.</p>
+  </header>
+
+  <main>
+    <section>
+      <h2>Report a Problem</h2>
+
+      <form id="complaintForm">
+        <label for="title">Problem title</label>
+        <input id="title" required
+               placeholder="Example: Fan not working">
+
+        <label for="location">Location</label>
+        <input id="location" required
+               placeholder="Example: Room 204">
+
+        <label for="description">Description</label>
+        <textarea id="description" required
+                  placeholder="Explain the problem"></textarea>
+
+        <button type="submit">Submit Complaint</button>
+      </form>
+
+      <p id="message" role="status"></p>
+    </section>
+
+    <section>
+      <h2>Complaints</h2>
+      <div id="complaintList">
+        <p>No complaints yet.</p>
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
