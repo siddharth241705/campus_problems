@@ -6,15 +6,41 @@
 body {
   margin: 0;
   font-family: Arial, sans-serif;
-  background: #f3f6fb;
+  background:
+    linear-gradient(rgba(239, 244, 251, 0.2), rgba(239, 244, 251, 0.2)),
+    url("https://images.unsplash.com/photo-1498243691581-b145c3f54a5a?auto=format&fit=crop&w=1920&q=85")
+      center / cover fixed;
   color: #202938;
 }
 
 header {
-  background: #173b70;
+  position: relative;
+  overflow: hidden;
+  min-height: min(76vh, 760px);
+  display: grid;
+  align-content: center;
+  background:
+    linear-gradient(110deg, rgba(12, 25, 48, 0), rgba(23, 59, 112, 0)),
+    url("https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=1920&q=85")
+      center 48% / cover;
   color: white;
-  padding: 24px;
-  text-align: center;
+  padding: 72px max(8vw, 24px);
+  text-align: left;
+}
+
+header h1 {
+  margin: auto;
+  font-size: clamp(3rem, 8vw, 6rem);
+  letter-spacing: -0.06em;
+  text-shadow: 0 3px 24px rgba(0, 0, 0, 0.25);
+}
+
+header p {
+  max-width: 34rem;
+  margin: auto;
+  color: rgba(255, 255, 255, 0.92);
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
 }
 
 main {
@@ -24,10 +50,38 @@ main {
 }
 
 section {
-  background: white;
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(8px);
   padding: 20px;
   margin-bottom: 20px;
   border-radius: 12px;
+}
+
+main > section:nth-child(2) {
+  position: relative;
+  overflow: hidden;
+  padding-top: 164px;
+}
+
+main > section:nth-child(2)::before {
+  position: absolute;
+  inset: 0 0 auto;
+  height: 140px;
+  background:
+    linear-gradient(90deg, rgba(12, 31, 67, 0.58), rgba(12, 31, 67, 0.08)),
+    url("https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=1200&q=85")
+      center 48% / cover;
+  content: "";
+}
+
+main > section:nth-child(2) h2 {
+  position: absolute;
+  top: 22px;
+  left: 20px;
+  margin: 0;
+  color: white;
+  font-size: 1.5rem;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.45);
 }
 
 label {
@@ -68,4 +122,13 @@ button {
 
 .status {
   font-weight: bold;
+}
+
+@media (max-width: 600px) {
+  header {
+    min-height: 62vh;
+    padding: 56px 24px;
+    background-position: 55% center;
+  }
+
 }
